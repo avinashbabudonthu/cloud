@@ -8,3 +8,5 @@
 * Setting up a Cloud Solution Environment on Google Cloud
 * Google Cloud Functions Fundamentals
 * Deploying Containerized Workloads Using Google Cloud Kubernetes Engine
+* Architecting Event-driven Serverless Solutions Using Google Cloud Functions
+* Architecting Scalable Web Applications Using Google App Engine
