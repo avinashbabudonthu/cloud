@@ -283,4 +283,4 @@ sudo systemctl start apache2
 ![picture](pictures/launching-gce-instance-3.jpg)
 
 # Use cases for GCP compute services
-* ![picture](pictures/compute-services-use-cases.jpg)
+![picture](pictures/compute-services-use-cases.jpg)
