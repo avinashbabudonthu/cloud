@@ -17,7 +17,7 @@
 	* Collection of multiple data centers
 	* 1 Region will have atleast 2 zones
 * Network edge locations
-	* Delivers static contact to enhance user experience
+	* Delivers static content to enhance user experience
 	
 # Building blocks of GCP
 * Core
