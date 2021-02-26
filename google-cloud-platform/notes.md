@@ -47,7 +47,7 @@
 		* IaaS - Infrastructure as a Service
 		* Similar to AWS EC2
 	* App Engine - GAE - Google App Engine
-		* PaaS
+		* PaaS - Platform as a Service
 	* Kubernetes Engine - GKE - Google Kubernetes Engine
 		* CaaS - Container as a Services
 	* Container Registry
@@ -56,10 +56,10 @@
 		* Similar to AWS Lambda
 * Storage and databases
 	* Cloud storage
-	* Cloud Bigtable
 	* Cloud datastore
-	* Cloud Sql
+	* Cloud Bigtable
 	* Cloud spanner
+	* Cloud Sql
 	* Persistent disk
 * Network
 	* Cloud virtual network
@@ -183,10 +183,10 @@ gcloud compute regions list
 # Google compute services
 * Code is deployed and executed in one of the compute services
 * GCP offers following compute services
-	* App Engine - GAE
-		* PaaS - Platform as a Service
 	* Compute Engine - GCE
 		* IaaS - Infrastructure as a Service
+	* App Engine - GAE
+		* PaaS - Platform as a Service
 	* Kubernetes Engine - GKE
 		* Orchestration platform
 		* To manage containers
@@ -219,7 +219,7 @@ gcloud compute regions list
 * Bring in container images, package them as kubernetes artifacts, deploy them, scale them through GKE
 * Kubernetes has control panel and worker node
 * GKE provisions worker node as GCE VMs
-* This service is tightly integrated with GCP resources such as network, storage and monitoring
+* This service is tightly integrated with GCP resources such as storage, network and monitoring
 	* For example if we expose service using GKE it will be using load balancer
 	* GKE infrastructure is monitored by `stackdriver`
 * Auto scaling
@@ -242,7 +242,7 @@ gcloud compute regions list
 	* Every time event occured Trigger will invoke a function
 
 # Launching GCE instance
-* Signin to GCP console
+* Sign in to GCP console
 * Left menu
 	* Compute Engine
 		* click `VM instances`
@@ -251,7 +251,7 @@ gcloud compute regions list
 * Select Region. Ex: `asia-south1(Mumbai)`
 * Select Zone. Ex: `asia-south1-a`
 * Machine configuration
-	* Select `Machine type` - `e2-micro` to be free limit
+	* Select `Machine type` - `e2-micro` to be in free limit
 * Firewall
 	* Check `Allow HTTP traffic`
 * Click `Create` button
@@ -263,6 +263,8 @@ gcloud compute instances list
 ```
 * Connect to GCE VM instance via SSH
 ```
+gcloud compute ssh <instance-name> --zone <zone-name>
+
 gcloud compute ssh instance-1 --zone asia-southeast1-c
 ```
 * Update the packages in linux VM
@@ -284,3 +286,76 @@ sudo systemctl start apache2
 
 # Use cases for GCP compute services
 ![picture](pictures/compute-services-use-cases.jpg)
+
+# Storage Services
+* Storage services are classified into three types
+	* Object storage
+	* Block storage
+	* Cloud Filestore
+* GCP storage services
+	* Cloud Storage - GCS - Google cloud storage
+	* Persistent disk
+	* Cloud Filestore
+
+# Google Cloud Storage GCS
+* Object storage in GCP environment
+* Applications store and retrieve objects through API
+* GCS is designed 99.99% durability
+	* Chance of loosing is nill
+* Data can be stored in single region, dual region or multi region
+
+# Google cloud storage - storage classes
+* Standard
+	* Low latancy
+	* High frequency access
+* Nearline
+	* Low frequency access
+* Coldline
+	* Lowest frequency access
+* High performance object storage
+	* Standard
+* Backup and archival storage
+	* Nearline
+	* Coldline
+	
+# Persistent disk PD
+* Block storage service
+* Attached to GCE VMs
+* Disks are independent of compute engine VMs. Can retain it even after VM is terminated
+* Each disk can scale up to 64TB in size
+* Persistent disks have one writer and multiple readers
+	* we can attach one PD to multiple VMs where 1 VM act as writer and all other will act as readers
+* Supports both SSD and HDD storage options
+* SSD is best for I/O intensive applications
+* PD available in 3 storage types
+	* Zonal
+	* Regional
+	* Local
+	
+# Cloud Filestore
+* File system as a service
+* Centralized, highly available filesystem for GCE and GKE
+* Filestore has built-in zonal storage redundancy for high availability
+	* When we store data that will be replicated to multiple zone automatically
+* Data always encrypted while in transit
+
+# Demo google cloud storage
+* Sign in to GCP console
+* Left menu
+	* Storage
+	* Browser
+* Click `+ CREATE BUCKET` button
+* Follow the instructions to create bucket
+* Once bucket is created, click `CREATE FOLDER` button
+	* Give folder name
+	* Click `CREATE` button
+* Once folder is created, click on folder name
+	* Click `UPLOAD FILES` button
+	* Upload any file into folder
+![picture](pictures/cloud-storage-upload-file-1.jpg)
+
+# Use cases of GCP storage services
+* Use cases of google cloud storage services
+![picture](pictures/cloud-storage-use-cases.jpg)
+
+# GCP network services
