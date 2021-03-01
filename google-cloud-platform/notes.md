@@ -1,5 +1,3 @@
-# Notes
-
 # Overview of Google Cloud Platform - GCP 
 * GCP has
 	* 20 Regions
@@ -38,7 +36,7 @@
 * Security
 * Devops Tools
 * Management Tools
-	* Services through which customers can interact and manage their deployments
+	* Services through which customers can interact and manage their deployments\
 ![picture](pictures/building-blocks.jpg)
 
 # Key GCP services
@@ -144,7 +142,7 @@
 * Folder may belong to one and only one organization. This is optional
 * Organization is top level entity in GCP hierarchy
 * Organization will be available only if we have `GSuite` account
-* GCP resources hierarchy
+* GCP resources hierarchy\
 ![picture](pictures/gcp-resources-hierarchy.jpg)
 
 # Interactive with GCP
@@ -156,7 +154,7 @@
 	* Cloud SDK can be installed in windows, linux, mac machines
 	* Cloud shell is terminal built into the browser. Without installing anything we can quickly interact with GCP
 * Mobile App
-* REST API
+* REST API\
 ![picture](pictures/interacting-with-gcp.jpg)
 
 # Accesing GCP shell
@@ -169,9 +167,9 @@
 
 # Interacting with GCP using cloud shell
 * Signin to GCP console - [https://cloud.google.com/free](https://cloud.google.com/free)
-* Click `Actiave Cloud Shell` icon on top right corner
+* Click `Actiave Cloud Shell` icon on top right corner\
 ![picture](pictures/activate-cloud-shell.jpg)
-* Cloud shell display below popup
+* Cloud shell display below popup\
 ![picture](pictures/cloud-shell-1.jpg)
 * Click `Continue` button
 * Execute following command
@@ -255,7 +253,7 @@ gcloud compute regions list
 * Firewall
 	* Check `Allow HTTP traffic`
 * Click `Create` button
-* This will take some time. Once VM is launched we can see Green tick
+* This will take some time. Once VM is launched we can see Green tick\
 ![picture](pictures/launching-gce-instance.jpg)
 * Check list of compute instances using gcp shell
 ```
@@ -279,9 +277,9 @@ sudo apt-get install -y apache2
 ```
 sudo systemctl start apache2
 ```
-* Click `External IP`
+* Click `External IP`\
 ![picture](pictures/launching-gce-instance-2.jpg)
-* Result
+* Result\
 ![picture](pictures/launching-gce-instance-3.jpg)
 
 # Use cases for GCP compute services
@@ -351,11 +349,119 @@ sudo systemctl start apache2
 	* Click `CREATE` button
 * Once folder is created, click on folder name
 	* Click `UPLOAD FILES` button
-	* Upload any file into folder
+	* Upload any file into folder\
 ![picture](pictures/cloud-storage-upload-file-1.jpg)
 
 # Use cases of GCP storage services
-* Use cases of google cloud storage services
+* Use cases of google cloud storage services\
 ![picture](pictures/cloud-storage-use-cases.jpg)
 
 # GCP network services
+* One of the key building blocks of GCP
+* Leverages Google's global network for connectivity
+	* Advantages of GCP is customers will be using same global network where google services like Youtube, Gmail etc are running on
+* GCP offers `standard` and `premium` tiers
+* Load balancers route traffic evenly to multiple instances of applications
+* `Virtual Private Cloud (VPC)` provides private and hybrid networking
+* Customers can extend their data center to GCP through hybrid connectivity
+
+# GCP network service tiers
+* Network service tiers choice of traffic optimization
+* There are 2 service tiers
+	* Standard
+	* Premium
+* Premium tier delivers traffic via Google's premium backbone that powers rest of Google services like Google search, Youtube, Gmail etc
+* Standard tier regular connectivity based on ISP network
+	* This is based on 3rd party connectivity
+	* Does not use high throughput, high performance network backbone
+	* Cheaper than premium tier
+* GCP uses premium tier as default option
+* Network services docs - refer [https://cloud.google.com/network-tiers/docs/overview](https://cloud.google.com/network-tiers/docs/overview)
+
+# Google cloud load balancing
+* Distributes traffic across multiple GCE VMs in a single or multiple regions
+* When load balancers are put in front of GCE VMs, can route the traffic across multiple instances
+* There are 2 types of load balancers
+	* HTTP(S) load balancer
+	* Network load balancer
+* HTTP(S)
+	* Global load balancing
+	* Used for routing traffic to web apps that are deployed in more than one zone/region
+* Network load balancer
+	* Routing the traffic across multiple TCP and UDP endpoints within the same region
+* Both types can be used as internal or external load balancers. check the image below how we can use external and internal load balancers
+	* When request comes based on user location external load balancer will route the request to nearest region
+	* Once  request reaches web tier we have to use internal load balancer to route the request to one of the instances of application. In below image `Internal Tier` is application\
+![picture](pictures/load-balancers-1.jpg)
+
+# Virtual private cloud
+* Software defined network to enable private networking for VMs within the public cloud
+* VPC network is global resource with regional subnets
+	* global resource means we can create VPC that is visible from any of the regions
+	* After that we can create subnet per region which is attached to same VPC
+* Each VPC is isolated from each other
+	* One VPC cannot see the resources deployed in another VPC
+	* If we are creating multiple VPC then we need to explicitely allow communiation between these VPCs by creating Firewall rules
+* Firewall rules - allow or restrict traffic within subnets
+* General practice is to create 1 public subnet and multiple private subnets, keep sensetive resources within the private subnets. Private subnets are never exposed to the outside world. Only those resources deployed in public subnets are visible to outside world. Public subnets act as channel to access resources in private subnets
+* Resources with VPC communicate via IPV4 address. There is DNS service within VPC that provides name resolution
+* VPC networks can be connected to other VPC networks through `VPC Peering`
+* VPC networks are securely connected in hybrid environment using `Cloud VPN` or `Cloud Interconnect`
+
+# GCP hybrid connectivity
+* Extends local data center to GCP
+* 3 GCP services enable hybrid connectivity
+	* Cloud VPN
+	* Cloud Interconnect
+	* Peering
+* Cloud Interconnect extends on-premises network to GCP via Dedicated or Partner Interconnect
+* Cloud VPN connectes on-premises to GCP securely over public internet
+	* Economical mechanism to extend data center 
+* Peering enable direct access to Google cloud resources with reduced internet egress fee
+	* egress fee - bandwidth charged for outbound connectivity
+	* When we are making request to GCP from on-premises there is egree free. In peering this egree fee is much lower when compared to cloud interconnect
+
+# Instance Template
+* When we are launching multiple VMs, instead of creating them independently and configuring them exactly with same settings and softwares, we can create `Instance Template`
+* So `Instance Template` act as blue print for launching multiple GCE VMs
+* Go to 
+	* Compute Engine
+	* Intance Templates\
+![picture](pictures/instance-templates-1.jpg)
+* Click `Create instance template` button
+* Select the approprivate values for each section
+* Select `Allow HTTP traffic`
+* If we want to run any script automatically after launching GCE VM, then we need to put that script in Automation > Startup script. Following is sample script to install apache, create default index.html and displays hello from hostName
+```
+#! /bin/bash
+apt-get update
+apt-get install -y apache
+cat <<EOF > /var/www/html/index.html
+<html><body><h1>Hello ${hostname}</h1></body></html>
+EOF
+```
+* Click `Create` button
+
+# Demo on configuring load balancing
+* Requirement - couple of VMs deployed in a region connected to a load balancer. Traffic is routed evenly across the instances
+* Create [Instance Template](#instance-template)
+* Click `Instance groups` in `Compute Engine` left menu
+* Click `CREATE INSTANCE GROUP` button
+* Enter following details
+	* Name
+	* Description
+	* Location - select `Multiple zones`
+	* Select `Region`
+	* Select `Instance Template` created above
+	* Turn off `Auto-scaling/Auto-scaling mode`
+	* Number of instances - 2
+	* Maximum number of instances - 2
+	* Create `Autohealing/Health check`
+	* Initial Delay - 120 seconds
+	* Click `Create` button
+	* This will take time. Once instances created we will see green ticks\
+* Below image is not created yet.. take screen shot once instances are created
+```
+![picture](pictures/load-balancing-1.jpg)
+```
+* Once instances are created, go to `VM instances`. We can see 2 instances
